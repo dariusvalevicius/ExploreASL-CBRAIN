@@ -1,0 +1,34 @@
+#!/bin/bash
+echo "=============================== Open ExploreASL v1.9.0 Docker ================================"
+
+# Don't forget to save this in the correct format for unix or to use dos2unix
+
+# Environment variables:
+# $DATAROOT = Relative root directory of the BIDS dataset
+# $IMPORTMODULES = Boolean array for the DICOM 2 BIDS import workflow
+# $PROCESSMODULES = Boolean array for the ExploreASL processing pipeline
+
+# Create data directory
+mkdir -p /opt/incoming/
+
+# Copy the dataset
+cp -r /data/incoming   /opt/
+
+# Run ExploreASL shell script
+echo "Run ExploreASL..."
+staticDockerPath="/opt/incoming/"
+pathDataRoot=$staticDockerPath$DATAROOT
+textInfo="Root directory: "
+outputText=$textInfo$pathDataRoot
+echo $outputText
+/bin/bash /opt/xasl/xASL_latest/run_xASL_latest.sh /opt/mcr/v97/ $pathDataRoot $IMPORTMODULES $PROCESSMODULES
+
+# Copy the results to outgoing
+cp -r /opt/incoming/.   /data/outgoing/ 
+
+# Set access rights
+chmod -R 777 /data/outgoing/ 
+
+# End of container execution
+echo "=========================================== DONE ============================================="
+

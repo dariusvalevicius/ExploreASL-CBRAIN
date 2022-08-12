@@ -1,10 +1,12 @@
 {
-    "DatasetRoot": "TestDataSet/rawdata/",
-    "ImportModules_DCM2NII": 0,
-    "ImportModules_NII2BIDS": 0,
-    "ImportModules_DEFACE": 0,
-    "ImportModules_BIDS2LEGACY": 0,
-    "ProcessModules_STRUCTURAL": 1,
-    "ProcessModules_ASL": 1,
-    "ProcessModules_POPULATION": 1
+    "input_type": "DICOM",
+    "input_subject_quantity": "One Subject",
+    "input_folder": "test_input",
+    "import_modules_dcm2nii": 0,
+    "import_modules_nii2bids": 0,
+    "import_modules_deface": 0,
+    "import_modules_bids2legacy": 1,
+    "process_modules_structural": 1,
+    "process_modules_asl": 1,
+    "process_modules_population": 1
 }
