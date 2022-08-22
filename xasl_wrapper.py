@@ -44,51 +44,43 @@ p.add_argument('--pm_population', type=str, default='0')
 args = p.parse_args(sys.argv[1:])
 
 
-## Copy input to folder that xASL expects it to be in
-print('Preparing input directory...')
-shutil.copytree(args.input_folder, '/data/incoming')
-
-
+################################ Create xASL parameters ################################
 ## Create boolean arrays for modules
+# Semicolons (MATLAB vertical vectors) are used instead of spaces (horizontal vectors),
+# because run_xASL_latest.sh will send the space-separated characters as separate shell arguments...
 print('Parsing module inclusion parameters...')
 import_modules = '[' + args.im_dcm2nii + ';' + args.im_nii2bids + ';' + args.im_deface + ';' + args.im_bids2legacy + ']'
 process_modules = '[' + args.pm_structural + ';' + args.pm_asl + ';' + args.pm_population + ']'
-
-# import_modules = "1"
-# process_modules = "1"
 
 print('Import Modules: ' + import_modules)
 print('Process Modules: ' + process_modules)
 
 
-## Set necessary environment variables
-print('Setting environment variables for xASL execution...')
-os.environ["DATASETROOT"] = args.dataset_root
-os.environ["IMPORTMODULES"] = import_modules
-os.environ["PROCESSMODULES"] = process_modules
+## Make copy of input dir as output
+print('Copying input files...')
+path_data_root = os.path.join(os.getcwd(), args.output_folder)
+print('Output directory: ' + path_data_root)
+shutil.copytree(args.input_folder, args.output_folder)
 
 
-## Run ExploreASL from bash entrypoint script
+###################### Run ExploreASL from bash starter script #########################
 print('Running ExploreASL.')
-exit_code = subprocess.call('/opt/run.sh')
+# Original call (in Bash):
+# /bin/bash /opt/xasl/xASL_latest/run_xASL_latest.sh /opt/mcr/v97/ $pathDataRoot $IMPORTMODULES $PROCESSMODULES
+exit_code = subprocess.call(['bash', '/opt/xASL/run_xASL_latest.sh', '/opt/matlabruntime/v911/', path_data_root, import_modules, process_modules])
 
 if(exit_code):
     print('ExploreASL entrypoint terminated with exit code 1.')
 
 else:
     print('ExploreASL entrypoint terminated with exit code 0.')
-
-    ## Copy output data to CBRAIN's output volume
-    print('Preparing output directory...')
-    if os.path.exists(args.output_folder) and os.path.isdir(args.output_folder):
-        shutil.rmtree(args.output_folder)
-    shutil.copytree('/data/outgoing', args.output_folder)
-
     print('ExploreASL task completed.')
 
 
 ## End of script
 print('Terminating...')
+
+
 
 
 ###########################

@@ -1,12 +1,12 @@
 {
     "input_type": "DICOM",
-    "input_subject_quantity": "One Subject",
+    "input_subject_quantity": "One_Subject",
     "input_folder": "test_input",
     "import_modules_dcm2nii": 0,
     "import_modules_nii2bids": 0,
     "import_modules_deface": 0,
     "import_modules_bids2legacy": 1,
-    "process_modules_structural": 1,
-    "process_modules_asl": 1,
-    "process_modules_population": 1
+    "process_modules_structural": 0,
+    "process_modules_asl": 0,
+    "process_modules_population": 0
 }

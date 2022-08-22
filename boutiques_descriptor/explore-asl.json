@@ -3,11 +3,11 @@
     "description": "Tool for comprehensive analysis of Arterial Spin Labeling (ASL) data.",
     "tool-version": "v1.9.0",
     "schema-version": "0.5",
-    "command-line": "python3 -u xasl_wrapper.py [input_type] [input_subject_quantity] [input_folder] [output_folder] [DatasetRoot] [ImportModules_DCM2NII] [ImportModules_NII2BIDS] [ImportModules_DEFACE] [ImportModules_BIDS2LEGACY] [ProcessModules_STRUCTURAL] [ProcessModules_ASL] [ProcessModules_POPULATION]",
+    "command-line": "python3 -u /opt/xasl_wrapper.py [input_type] [input_subject_quantity] [input_folder] [output_folder] [DatasetRoot] [ImportModules_DCM2NII] [ImportModules_NII2BIDS] [ImportModules_DEFACE] [ImportModules_BIDS2LEGACY] [ProcessModules_STRUCTURAL] [ProcessModules_ASL] [ProcessModules_POPULATION]",
     "container-image": {
         "image": "dvalev/xasl_cbrain:latest",
         "index": "docker://",
-        "type": "docker"
+        "type": "singularity"
     },
     "inputs": [
         {
@@ -18,16 +18,16 @@
             "type": "String",
             "value-choices": [
                 "DICOM",
-                "ASL BIDS",
-                "xASL Legacy"
+                "ASL_BIDS",
+                "xASL_Legacy"
             ],
             "value-disables": {
                 "DICOM": [],
-                "ASL BIDS": [
+                "ASL_BIDS": [
                     "import_modules_dcm2nii",
                     "import_modules_nii2bids"
                 ],
-                "xASL Legacy": [
+                "xASL_Legacy": [
                     "import_modules_dcm2nii",
                     "import_modules_nii2bids",
                     "import_modules_deface",
@@ -44,8 +44,8 @@
             "optional": false,
             "type": "String",
             "value-choices": [
-                "One Subject",
-                "Multiple Subjects"
+                "One_Subject",
+                "Multiple_Subjects"
             ],
             "value-key": "[input_subject_quantity]",
             "command-line-flag": "--input_subject_quantity"
@@ -219,81 +219,5 @@
     "custom": {
         "cbrain:author": "Darius Valevicius <darius.valevicius@mail.mcgill.ca>",
         "cbrain:readonly-input-files": true
-    },
-    "invocation-schema": {
-        "$schema": "http://json-schema.org/draft-04/schema#",
-        "title": "ExploreASL.invocationSchema",
-        "description": "Invocation schema for exploreasl.",
-        "type": "object",
-        "additionalProperties": false,
-        "properties": {
-            "input_type": {
-                "enum": [
-                    "DICOM",
-                    "ASL BIDS",
-                    "xASL Legacy"
-                ]
-            },
-            "input_subject_quantity": {
-                "enum": [
-                    "One Subject",
-                    "Multiple Subjects"
-                ]
-            },
-            "input_folder": {
-                "type": "string"
-            },
-            "dataset_root": {
-                "type": "string"
-            },
-            "import_modules_dcm2nii": {
-                "enum": [
-                    0,
-                    1
-                ]
-            },
-            "import_modules_nii2bids": {
-                "enum": [
-                    0,
-                    1
-                ]
-            },
-            "import_modules_deface": {
-                "enum": [
-                    0,
-                    1
-                ]
-            },
-            "import_modules_bids2legacy": {
-                "enum": [
-                    0,
-                    1
-                ]
-            },
-            "process_modules_structural": {
-                "enum": [
-                    0,
-                    1
-                ]
-            },
-            "process_modules_asl": {
-                "enum": [
-                    0,
-                    1
-                ]
-            },
-            "process_modules_population": {
-                "enum": [
-                    0,
-                    1
-                ]
-            }
-        },
-        "required": [
-            "input_type",
-            "input_subject_quantity",
-            "input_folder"
-        ],
-        "dependencies": {}
     }
 }
