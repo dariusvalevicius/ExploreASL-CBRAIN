@@ -23,6 +23,12 @@ def parse_arguments(argv):
                    help="Whether the input dataset contains one subject or multiple subjects' data.\nNOTE: If using a CBCSV to run multiple subjects in parallel, select 'Single_Subject'.")
     p.add_argument('--dataset_description', type=str,
                    help="dataset_description.json must be provided if not present in the input folder.")
+    p.add_argument('--source_structure', type=str,
+                   help="Config file defining structure of DICOM directory. Only required for DICOM. See ExploreASL documentation for details.\nNOTE: This field is not required if sourceStructure.json is included in the input folder (at root level).")
+    p.add_argument('--study_par', type=str,
+                   help="Config file containing study description fields. Recommended for DICOM input. See ExploreASL documentation for details.")
+    p.add_argument('--parameter_behaviour', type=str,
+                   help="If there is already a dataPar.json present in the input directory, do you wish to keep the original, overwrite, merge with priority to the original, or merge with priority to the new parameters?")
 
     # Import Modules
     p.add_argument('--im_dcm2nii', type=str,

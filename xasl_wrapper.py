@@ -3,7 +3,8 @@ import os
 import sys
 import shutil
 from parse_arguments import parse_arguments
-from to_json import to_json
+from to_json import parse_list_to_dict, merge_dicts
+import json
 
 
 ######################## Run arg parser script #############################
@@ -81,22 +82,68 @@ if args.dataset_description:
     shutil.copy(args.dataset_description, os.path.join(
         path_data_root, 'rawdata', 'dataset_description.json'))
 
+# Copy sourceStructure.json if separately provided
+if args.source_structure:
+    print('Copying sourceStructure.json...')
+    shutil.copy(args.source_structure, os.path.join(
+        path_data_root, 'sourceStructure.json'))
+
+# Copy studyPar.json if separately provided
+if args.study_par:
+    print('Copying studyPar.json...')
+    shutil.copy(args.study_par, os.path.join(
+        path_data_root, 'studyPar.json'))
+
 
 ################################ Create JSON config ###############################
 
 print("Creating config file...")
+data_par = parse_list_to_dict(vars(params))
 
-data_par_path = os.path.join(
+
+root_data_par_path = os.path.join(
     path_data_root, 'dataPar.json')
+derivates_data_par_path = os.path.join(
+    path_data_root, 'derivatives/ExploreASL/dataPar.json')
 
-if os.path.isfile(data_par_path):
-    print("dataPar.json already present in data root directory. Skipping...")
-else:
-    json_object = to_json(vars(params))
 
-    os.makedirs(os.path.dirname(data_par_path), exist_ok=True)
-    with open(data_par_path, 'w') as f:
+write_data_par = True
+
+if (os.path.isfile(root_data_par_path)) | (os.path.isfile(derivates_data_par_path)):
+    print("dataPar.json already present.")
+
+    if os.path.isfile(root_data_par_path):
+        data_par_path = root_data_par_path
+    if os.path.isfile(derivates_data_par_path):
+        data_par_path = derivates_data_par_path
+
+    match args.parameter_behaviour:
+        case "Defer":
+            print("Deferring...")
+            write_data_par = False
+        case "Overwrite":
+            print("Overwriting...")
+        case "Merge_to_original":
+            print("Merging to original file...")
+            with open(data_par_path, 'r') as f:
+                data_par_orig = json.load(f)
+                data_par = merge_dicts(data_par_orig, data_par)
+        case "Merge_to_new":
+            print("Merging to new settings...")
+            with open(data_par_path, 'r') as f:
+                data_par_orig = json.load(f)
+                data_par = merge_dicts(data_par, data_par_orig)
+
+if write_data_par:
+    print('Writing dataPar.json...')
+    # os.makedirs(os.path.dirname(data_par_path), exist_ok=True)
+    with open(root_data_par_path, 'w') as f:
+        json_object = json.dumps(data_par, indent=4)
         f.write(json_object)
+    # Remove dataPar.json in derivates/ExploreASL if it is present
+    if os.path.isfile(derivates_data_par_path):
+        print('Removing dataPar.json from derivatives directory...')
+        os.remove(derivates_data_par_path)
 
 
 ###################### Run ExploreASL from bash starter script #########################
