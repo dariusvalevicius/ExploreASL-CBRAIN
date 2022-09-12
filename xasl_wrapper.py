@@ -1,3 +1,4 @@
+#!/usr/bin/python3.10 -u
 import subprocess
 import os
 import sys
