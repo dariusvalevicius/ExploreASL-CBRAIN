@@ -3,6 +3,7 @@ import subprocess
 import os
 import sys
 import shutil
+import glob
 from parse_arguments import parse_arguments
 from to_json import parse_list_to_dict, merge_dicts
 import json
@@ -62,15 +63,24 @@ if args.input_type == "BIDS":
 
     else:
         if args.subject_quantity == "Single_Subject":
-            if not os.path.exists(os.path.join(input_path, 'perf')):
+
+            # Check for sessions folder
+            sessions = glob.glob(os.path.join(input_path, "ses*"))
+            if sessions:
+                ses_dir = sessions[0]
+            else:
+                ses_dir = ""
+
+            # Look for perfusion folder; if missing, input directory or parameters are misspecified
+            if not os.path.exists(os.path.join(input_path, ses_dir, 'perf')):
                 print(
                     'ERROR: BIDS Single Subject selected but cannot find perfusion folder.')
                 exit(1)
             else:
                 dest_path = os.path.join(
-                    dest_path, 'rawdata', args.input_folder)
+                    dest_path, 'rawdata', args.input_folder) # Directory to copy data to
         elif args.subject_quantity == "Multiple_Subjects":
-            dest_path = os.path.join(dest_path, 'rawdata')
+            dest_path = os.path.join(dest_path, 'rawdata') # Directory to copy data to
 
 print('Copying input files...')
 print('Copying contents of ' + input_path + ' to ' + dest_path)
