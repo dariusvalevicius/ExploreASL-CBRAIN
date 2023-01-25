@@ -7,6 +7,17 @@ def add_level(dict, levels, value):
     '''Recursively populates dictionary
     based on list of levels'''
 
+    # First parse list string values into lists
+    if type(value) == str and "," in value:
+        value = value.split(",")
+
+    # Convert bools to integers (0 and 1)
+    if type(value) == bool:
+        if value:
+            value = 1
+        else:
+            value = 0
+
     # If multiple levels are left...
     if len(levels) > 1:
 
@@ -32,7 +43,7 @@ def reduce_brackets(dict):
             continue
         elif len(dict[key]) == 1:
             dict[key] = dict[key][0]
-        else:
+        elif type(dict[key]) == dict:
             for inner_dict in dict[key]:
                 inner_dict = reduce_brackets(inner_dict)
     return dict

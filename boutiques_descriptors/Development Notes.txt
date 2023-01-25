@@ -1,0 +1,11 @@
+Three tools:
+
+ExploreASL_DICOM:
+- Takes sourceStructure inputs (as string lists)
+- Runs all import modules
+
+ExploreASL_BidsSubject:
+- Population module is excluded
+
+ExploreASL_BidsDataset:
+- All modules included
