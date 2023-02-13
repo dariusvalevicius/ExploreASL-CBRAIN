@@ -14,7 +14,7 @@ def parse_arguments(argv):
     ################################## Arguments #########################################
     # Custom I/O parameters
     p.add_argument('--mode', type=str,
-                   help="Which CBRAIN tool is being used? 1. DICOM 2. BIDS_Subject 3. BIDS_Dataset")
+                   help="Which CBRAIN tool is being used? 1. DICOM 2. BIDS")
 
     p.add_argument('--input_folder', type=str,  # required=True,
                    help="Data folder to be processed. Can be single-subject or multi-subject, in DICOM, BIDS, or xASL Legacy format.\nNOTE: For the Structural and ASL process modules, a CBCSV can be used to process multiple subjects. For the Population module, all subjects must be included in one file collection.")

@@ -56,26 +56,11 @@ print('Preparing output directory...')
 output_path = os.path.abspath(args.output_folder)
 print('Data root directory: ' + output_path)
 
-## BIDS Subject:
-## Copy BIDS subject folder to root/rawdata
-## Copy dataset_description.json to the same directory
-
-if args.mode == "BIDS_Subject":
-
-    dest_path = os.path.join(output_path, "rawdata")
-
-    print('Copying input files...')
-    print('Copying contents of ' + args.input_folder + ' to ' + dest_path)
-    shutil.copytree(args.input_folder, dest_path)
-
-    print('Copying dataset_description.json...')
-    shutil.copy(args.dataset_description, dest_path)
-
 ## BIDS dataset:
 ## Copy BIDS dataset (with dataset_description.json)
 ## to root/rawdata
 
-if args.mode == "BIDS_Dataset":
+if args.mode == "BIDS":
 
     dest_path = os.path.join(output_path, "rawdata")
 

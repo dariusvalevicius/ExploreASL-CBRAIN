@@ -11,12 +11,12 @@ RUN apt-get update && \
     apt install -y python3.10
     
 # Copy wrapper scripts
-COPY xasl_wrapper.py /opt/xasl_cbrain/xasl_wrapper.py
+COPY run_xasl.py /opt/xasl_cbrain/run_xasl.py
 COPY parse_arguments.py /opt/xasl_cbrain/parse_arguments.py
 COPY to_json.py /opt/xasl_cbrain/to_json.py
 
 # Ensure execute permissions
-RUN chmod 755 /opt/xasl_cbrain/xasl_wrapper.py
+RUN chmod 755 /opt/xasl_cbrain/run_xasl.py
 
 # Add wrapper to path
 ENV PATH="${PATH}:/opt/xasl_cbrain"
