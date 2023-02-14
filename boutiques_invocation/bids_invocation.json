@@ -1,0 +1,8 @@
+{
+    "input_folder": "sub-01",
+    "dataset_description_json": "ds000240/dataset_description.json",
+    "x__dataset__subjectRegexp": "sub-.*$",
+    "import_modules_deface": "1",
+    "process_modules_structural": "1",
+    "process_modules_asl": "1"
+}

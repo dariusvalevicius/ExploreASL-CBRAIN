@@ -15,6 +15,7 @@ DICOM version:
 
 BIDS version:
 - Uses BoutiquesBidsSingleSubjectMaker module in Boutiques to standardize input to BIDS Dataset
+- Does not support population/BIDS datset processing yet!
 
 
 

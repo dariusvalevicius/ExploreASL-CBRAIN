@@ -24,7 +24,7 @@ def parse_arguments(argv):
     #                help="The format of the input dataset.\nNOTE: For DICOM input, folder structure must adhere to a convention set by ExploreASL. See their documentation for details.")
     # p.add_argument('--subject_quantity', type=str,
     #                help="Whether the input dataset contains one subject or multiple subjects' data.\nNOTE: If using a CBCSV to run multiple subjects in parallel, select 'Single_Subject'.")
-    p.add_argument('--dataset_description', type=str,
+    p.add_argument('--dataset_description_json', type=str,
                    help="dataset_description.json must be provided if not present in the input folder.")
     # p.add_argument('--source_structure', type=str,
     #                help="Config file defining structure of DICOM directory. Only required for DICOM. See ExploreASL documentation for details.\nNOTE: This field is not required if sourceStructure.json is included in the input folder (at root level).")
@@ -34,21 +34,21 @@ def parse_arguments(argv):
     #                help="If there is already a dataPar.json present in the input directory, do you wish to keep the original, overwrite, merge with priority to the original, or merge with priority to the new parameters?")
 
     # Import Modules
-    p.add_argument('--im_dcm2nii', action="store_true",
+    p.add_argument('--im_dcm2nii', type=str, default=0,
                    help="Boolean: Use the DICOM to NIfTI import module")
-    p.add_argument('--im_nii2bids', action="store_true",
+    p.add_argument('--im_nii2bids', type=str, default=0,
                    help="Boolean: Use the NIfTI to BIDS import module")
-    p.add_argument('--im_deface', action="store_true",
+    p.add_argument('--im_deface', type=str, default=0,
                    help="Boolean: Use the defacing import module")
-    p.add_argument('--im_bids2legacy', action="store_true",
+    p.add_argument('--im_bids2legacy', type=str, default=0,
                    help="Boolean: Use the BIDS to xASL Legacy import module")
 
     # Process Modules
-    p.add_argument('--pm_structural', action="store_true",
+    p.add_argument('--pm_structural', type=str, default=0,
                    help="Boolean: Use the structural process module")
-    p.add_argument('--pm_asl', action="store_true",
+    p.add_argument('--pm_asl', type=str, default=0,
                    help="Boolean: Use the ASL process module")
-    p.add_argument('--pm_population', action="store_true",
+    p.add_argument('--pm_population', type=str, default=0,
                    help="Boolean: Use the population process module\nNOTE: Input folder must be a collection containing all subject data.")
 
     # Parse above arguments into args object
@@ -71,7 +71,7 @@ def parse_arguments(argv):
     ################ DataPar.json arguments #######################
 
     # Study Parameters
-    p.add_argument('--x__SESSIONS', type=str, default="ASL_1",
+    p.add_argument('--x__SESSIONS', type=str,
                    help="Use this to define sessions.\nExample ('.json' file): [\"ASL_1\",\"ASL_2\"]\nDEFAULT = {'ASL_1'}")
     p.add_argument('--x__session__options', type=str,
                    help="This is how the sessions will be called, example: {'baseline' 'drug'}.\nFor FEAST, this should be {'crushed' 'non-crushed'}.")

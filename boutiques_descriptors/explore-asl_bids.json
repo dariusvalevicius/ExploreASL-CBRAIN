@@ -1,11 +1,11 @@
 {
-    "name": "ExploreASL",
+    "name": "ExploreASL_BIDS",
     "description": "A pipeline and toolbox for image processing and statistics of arterial spin labeling perfusion MR images.",
     "tool-version": "1.9.0",
     "schema-version": "0.5",
     "author": "H. Mutsaerts et al.",
     "url": "https://exploreasl.github.io/Documentation/1.9.0/",
-    "command-line": "run_xasl.py [INPUT_FOLDER] [OUTPUT_FOLDER] [DATASET_DESCRIPTION] [ImportModules_DCM2NII] [ImportModules_NII2BIDS] [ImportModules_DEFACE] [ImportModules_BIDS2LEGACY] [ProcessModules_STRUCTURAL] [ProcessModules_ASL] [ProcessModules_POPULATION] [FOLDERHIERARCHY] [TOKENORDERING] [TOKENVISITALIASES] [TOKENSESSIONALIASES] [TOKENSCANALIASES] [X__SESSIONS] [X__SESSION__OPTIONS] [X__DATASET__SUBJECTREGEXP] [X__DATASET__EXCLUSION] [X__DATASET__FORCEINCLUSIONLIST] [X__MODULES__ASL__M0_CONVENTIONALPROCESSING] [X__MODULES__ASL__M0_GMSCALEFACTOR] [X__MODULES__ASL__M0POSITIONINASL4D] [X__MODULES__ASL__DUMMYSCANPOSITIONINASL4D] [X__Q__M0] [X__Q__BACKGROUNDSUPPRESSIONNUMBERPULSES] [X__Q__BACKGROUNDSUPPRESSIONPULSETIME] [X__Q__PRESATURATIONTIME] [X__Q__READOUTDIM] [X__Q__VENDOR] [X__Q__SEQUENCE] [X__Q__LABELINGTYPE] [X__Q__INITIAL_PLD] [X__Q__LABELINGDURATION] [X__Q__SLICEREADOUTTIME] [X__Q__LAMBDA] [X__Q__T2ART] [X__Q__BLOODT1] [X__Q__TISSUET1] [X__Q__NCOMPARTMENTS] [X__Q__APPLYQUANTIFICATION] [X__Q__SAVECBF4D] [X__MODULES__ASL__MOTIONCORRECTION] [X__MODULES__ASL__SPIKEREMOVALTHRESHOLD] [X__MODULES__ASL__BREGISTRATIONCONTRAST] [X__MODULES__ASL__BAFFINEREGISTRATION] [X__MODULES__ASL__BDCTREGISTRATION] [X__MODULES__ASL__BREGISTERM02ASL] [X__MODULES__ASL__BUSEMNIASDUMMYSTRUCTURAL] [X__MODULES__ASL__BPVCNATIVESPACE] [X__MODULES__ASL__PVCNATIVESPACEKERNEL] [X__MODULES__ASL__BPVCGAUSSIANMM] [X__MODULES__ASL__BMAKENIFTI4DICOM] [X__MODULES__BRUNLONGREG] [X__MODULES__BRUNDARTEL] [X__MODULES__STRUCTURAL__BSEGMENTSPM12] [X__MODULES__STRUCTURAL__BHAMMERSCAT12] [X__MODULES__STRUCTURAL__BFIXRESOLUTION] [X__SETTINGS__QUALITY] [X__SETTINGS__DELETETEMP] [X__SETTINGS__SKIPIFNOFLAIR] [X__SETTINGS__SKIPIFNOASL] [X__SETTINGS__SKIPIFNOM0] [X__SETTINGS__STOPAFTERERRORS] [X__SETTINGS__BLESIONFILLING] [X__SETTINGS__BAUTOACPC] [X__S__BMASKING] [X__S__ATLASES]",
+    "command-line": "run_xasl.py --mode BIDS [INPUT_FOLDER] [OUTPUT_FOLDER] [DATASET_DESCRIPTION] [ImportModules_DEFACE] [ProcessModules_STRUCTURAL] [ProcessModules_ASL] [X__SESSIONS] [X__SESSION__OPTIONS] [X__DATASET__SUBJECTREGEXP] [X__DATASET__EXCLUSION] [X__DATASET__FORCEINCLUSIONLIST] [X__MODULES__ASL__M0_CONVENTIONALPROCESSING] [X__MODULES__ASL__M0_GMSCALEFACTOR] [X__MODULES__ASL__M0POSITIONINASL4D] [X__MODULES__ASL__DUMMYSCANPOSITIONINASL4D] [X__Q__M0] [X__Q__BACKGROUNDSUPPRESSIONNUMBERPULSES] [X__Q__BACKGROUNDSUPPRESSIONPULSETIME] [X__Q__PRESATURATIONTIME] [X__Q__READOUTDIM] [X__Q__VENDOR] [X__Q__SEQUENCE] [X__Q__LABELINGTYPE] [X__Q__INITIAL_PLD] [X__Q__LABELINGDURATION] [X__Q__SLICEREADOUTTIME] [X__Q__LAMBDA] [X__Q__T2ART] [X__Q__BLOODT1] [X__Q__TISSUET1] [X__Q__NCOMPARTMENTS] [X__Q__APPLYQUANTIFICATION] [X__Q__SAVECBF4D] [X__MODULES__ASL__MOTIONCORRECTION] [X__MODULES__ASL__SPIKEREMOVALTHRESHOLD] [X__MODULES__ASL__BREGISTRATIONCONTRAST] [X__MODULES__ASL__BAFFINEREGISTRATION] [X__MODULES__ASL__BDCTREGISTRATION] [X__MODULES__ASL__BREGISTERM02ASL] [X__MODULES__ASL__BUSEMNIASDUMMYSTRUCTURAL] [X__MODULES__ASL__BPVCNATIVESPACE] [X__MODULES__ASL__PVCNATIVESPACEKERNEL] [X__MODULES__ASL__BPVCGAUSSIANMM] [X__MODULES__ASL__BMAKENIFTI4DICOM] [X__MODULES__BRUNLONGREG] [X__MODULES__BRUNDARTEL] [X__MODULES__STRUCTURAL__BSEGMENTSPM12] [X__MODULES__STRUCTURAL__BHAMMERSCAT12] [X__MODULES__STRUCTURAL__BFIXRESOLUTION] [X__SETTINGS__QUALITY] [X__SETTINGS__DELETETEMP] [X__SETTINGS__SKIPIFNOFLAIR] [X__SETTINGS__SKIPIFNOASL] [X__SETTINGS__SKIPIFNOM0] [X__SETTINGS__STOPAFTERERRORS] [X__SETTINGS__BLESIONFILLING] [X__SETTINGS__BAUTOACPC] [X__S__BMASKING] [X__S__ATLASES]",
     "container-image": {
         "image": "dvalev/xasl_cbrain:1.2.0",
         "index": "docker://",
@@ -40,32 +40,6 @@
             "command-line-flag": "--dataset_description_json"
         },
         {
-            "id": "import_modules_dcm2nii",
-            "name": "DCM2NII Conversion",
-            "description": "Use the DICOM to NIfTI import module",
-            "value-choices": [
-                "0",
-                "1"
-            ],
-            "default-value": "1",
-            "type": "Number",
-            "value-key": "[ImportModules_DCM2NII]",
-            "command-line-flag": "--im_dcm2nii"
-        },
-        {
-            "id": "import_modules_nii2bids",
-            "name": "NII2BIDS Conversion",
-            "description": "Use the NIfTI to BIDS import module",
-            "value-choices": [
-                "0",
-                "1"
-            ],
-            "default-value": "1",
-            "type": "Number",
-            "value-key": "[ImportModules_NII2BIDS]",
-            "command-line-flag": "--im_nii2bids"
-        },
-        {
             "id": "import_modules_deface",
             "name": "Defacing",
             "description": "Use the defacing import module",
@@ -77,19 +51,6 @@
             "type": "Number",
             "value-key": "[ImportModules_DEFACE]",
             "command-line-flag": "--im_deface"
-        },
-        {
-            "id": "import_modules_bids2legacy",
-            "name": "BIDS2LEGACY Conversion",
-            "description": "Use the BIDS to xASL Legacy import module",
-            "value-choices": [
-                "0",
-                "1"
-            ],
-            "default-value": "1",
-            "type": "Number",
-            "value-key": "[ImportModules_BIDS2LEGACY]",
-            "command-line-flag": "--im_bids2legacy"
         },
         {
             "id": "process_modules_structural",
@@ -148,75 +109,6 @@
             "type": "Number",
             "value-key": "[ProcessModules_ASL]",
             "command-line-flag": "--pm_asl"
-        },
-        {
-            "id": "process_modules_population",
-            "name": "Population Process Module",
-            "description": "Use the population process module\nNOTE: Input folder must be a collection containing all subject data.",
-            "optional": true,
-            "value-choices": [
-                "0",
-                "1"
-            ],
-            "default-value": "1",
-            "type": "String",
-            "value-key": "[ProcessModules_POPULATION]",
-            "command-line-flag": "--pm_population"
-        },
-        {
-            "id": "folderHierarchy",
-            "name": "Folder Hierarchy",
-            "description": "This specifies the names of all directories at all levels.\nExample: ^(\\d{\u0003}).*, ^Session([12])$,^(PSEUDO_10_min|T1-weighted|M0)$",
-            "optional": true,
-            "type": "String",
-            "list": true,
-            "list-separator": ",",
-            "value-key": "[FOLDERHIERARCHY]",
-            "command-line-flag": "--folderHierarchy"
-        },
-        {
-            "id": "tokenOrdering",
-            "name": "Token Ordering",
-            "description": "Tokens (parts of the directory names) were extracted according to the regular expressions above. Here we decide how the tokens are used.\nThis is specified by tokenOrdering: [patientName, SessionName, ScanName]\nExample: tokenOrdering: [2 0 1 3]; = second token is used for patient name, first for session name, third for scan name\ntokenOrdering: [2 1 0 3]; = second token is used for patient name, first for visit name, third for scan name",
-            "optional": true,
-            "type": "Number",
-            "list": true,
-            "list-separator": ",",
-            "value-key": "[TOKENORDERING]",
-            "command-line-flag": "--tokenOrdering"
-        },
-        {
-            "id": "tokenVisitAliases",
-            "name": "Token Visit Aliases",
-            "description": "If multiple visits are present - use the following notation to mark them:\ntokenVisitAliases:[session_1,1,session_2,2,session_3,3,session_4,4,session_5,5,session_6,6,session_7,7]",
-            "optional": true,
-            "type": "String",
-            "list": true,
-            "list-separator": ",",
-            "value-key": "[TOKENVISITALIASES]",
-            "command-line-flag": "--tokenVisitAliases"
-        },
-        {
-            "id": "tokenSessionAliases",
-            "name": "Token Session Aliases",
-            "description": "The second token defines the name of the session. The token was extracted using a regular expression *^Session([12])$*. This can represent a string Session1 or Session2. And either 1 or 2 is taken as the token.\nIn the session-aliases, each row represents one session name. The first column is the regular expression for the token, the second column gives the final name.\n^1$ ASL_1\n^2$ ASL_2\nHere, the token name ^1$ - that is a string equaling to 1 is replaced in the analysis folder by the session name ASL_1.\nExample: tokenSessionAliases: [^1$, ASL_1, ^2$, ASL_2],",
-            "optional": true,
-            "type": "String",
-            "list": true,
-            "list-separator": ",",
-            "value-key": "[TOKENSESSIONALIASES]",
-            "command-line-flag": "--tokenSessionAliases"
-        },
-        {
-            "id": "tokenScanAliases",
-            "name": "Token Scan Aliases",
-            "description": "cell array that defines the aliases for the ScanTypes, i.e. it tells the script which scans are which ScanType. First column should contain regular expression corresponding with the matching criteria in imPar.folderHierarchy whereas the second column contains the alias. Following valid aliases exist: 'T1' 'FLAIR' 'ASL4D' 'M0' 'ASL4D_RevPE' 'func' 'func_NormPE' 'func_RevPE' 'dwi' 'dwi_RevPE' 'DSC4D' Examples: {'^3D_FLAIR$', 'FLAIR'; '^T1w$', 'T1'; '^PCASL$', 'ASL4D'};",
-            "optional": true,
-            "type": "String",
-            "list": true,
-            "list-separator": ",",
-            "value-key": "[TOKENSCANALIASES]",
-            "command-line-flag": "--tokenScanAliases"
         },
         {
             "id": "x__SESSIONS",
@@ -816,10 +708,7 @@
             "name": "Import Modules",
             "description": "Module includes for importing. Set to '1' to run the module on this dataset.",
             "members": [
-                "import_modules_dcm2nii",
-                "import_modules_nii2bids",
-                "import_modules_deface",
-                "import_modules_bids2legacy"
+                "import_modules_deface"
             ]
         },
         {
@@ -828,21 +717,7 @@
             "description": "Module includes for processing. Set to '1' to run the module on this dataset.",
             "members": [
                 "process_modules_structural",
-                "process_modules_asl",
-                "process_modules_population"
-            ]
-        },
-        {
-            "id": "source_structure",
-            "name": "Source Structure",
-            "description": "",
-            "members": [
-                "folderHierarchy",
-                "tokenOrdering",
-                "tokenVisitAliases",
-                "tokenSessionAliases",
-                "tokenScanAliases"
-            ]
+                "process_modules_asl"            ]
         },
         {
             "id": "study_parameters",
