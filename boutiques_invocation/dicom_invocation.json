@@ -1,0 +1,12 @@
+{
+    "input_folder": "sourcedata",
+    "folderHierarchy": "^(.)+$,^(ASL|T1|M0)$",
+    "tokenOrdering":"1,0,2",
+    "tokenScanAliases":"^ASL$,ASL4D,^T1$,T1w,^M0$,M0",
+    "bMatchDirectories":true,
+    "x__dataset__subjectRegexp": "sub-.*$",
+    "process_modules_structural": "1",
+    "process_modules_asl": "1",
+    "process_modules_population": "1"
+
+}
