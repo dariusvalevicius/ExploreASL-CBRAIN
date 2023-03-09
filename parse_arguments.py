@@ -57,16 +57,19 @@ def parse_arguments(argv):
 
     ############### SourceStructure.json arguments ###################
 
-    p.add_argument('--folderHierarchy', type=str,  # required=True,
-                   help="This specifies the names of all directories at all levels.\nExample: \"^(\\d{\3}).*\", \"^Session([12])$\",\"^(PSEUDO_10_min|T1-weighted|M0)$\"")
-    p.add_argument('--tokenOrdering', type=str,  # required=True,
-                   help="Tokens (parts of the directory names) were extracted according to the regular expressions above. Here we decide how the tokens are used.\nThis is specified by \"tokenOrdering\": [patientName, SessionName, ScanName]\nExample: \"tokenOrdering\": [2 0 1 3]; = second token is used for patient name, first for session name, third for scan name\n\"tokenOrdering\": [2 1 0 3]; = second token is used for patient name, first for visit name, third for scan name")
-    p.add_argument('--tokenVisitAliases', type=str,  # required=True,
-                   help="If multiple visits are present - use the following notation to mark them:\n\"tokenVisitAliases\":[\"session_1\",\"1\",\"session_2\",\"2\",\"session_3\",\"3\",\"session_4\",\"4\",\"session_5\",\"5\",\"session_6\",\"6\",\"session_7\",\"7\"]")
-    p.add_argument('--tokenSessionAliases', type=str,  # required=True,
-                   help="The second token defines the name of the session. The token was extracted using a regular expression *^Session([12])$*. This can represent a string Session1 or Session2. And either 1 or 2 is taken as the token.\nIn the session-aliases, each row represents one session name. The first column is the regular expression for the token, the second column gives the final name.\n^1$ ASL_1\n^2$ ASL_2\nHere, the token name ^1$ - that is a string equaling to \"1\" is replaced in the analysis folder by the session name ASL_1.\nExample: \"tokenSessionAliases\": [\"^1$\", \"ASL_1\", \"^2$\", \"ASL_2\"],")
-    p.add_argument('--tokenScanAliases', type=str,  # required=True,
-                   help="")
+    # p.add_argument('--folderHierarchy', type=str,  # required=True,
+    #                help="This specifies the names of all directories at all levels.\nExample: \"^(\\d{\3}).*\", \"^Session([12])$\",\"^(PSEUDO_10_min|T1-weighted|M0)$\"")
+    # p.add_argument('--tokenOrdering', type=str,  # required=True,
+    #                help="Tokens (parts of the directory names) were extracted according to the regular expressions above. Here we decide how the tokens are used.\nThis is specified by \"tokenOrdering\": [patientName, SessionName, ScanName]\nExample: \"tokenOrdering\": [2 0 1 3]; = second token is used for patient name, first for session name, third for scan name\n\"tokenOrdering\": [2 1 0 3]; = second token is used for patient name, first for visit name, third for scan name")
+    # p.add_argument('--tokenVisitAliases', type=str,  # required=True,
+    #                help="If multiple visits are present - use the following notation to mark them:\n\"tokenVisitAliases\":[\"session_1\",\"1\",\"session_2\",\"2\",\"session_3\",\"3\",\"session_4\",\"4\",\"session_5\",\"5\",\"session_6\",\"6\",\"session_7\",\"7\"]")
+    # p.add_argument('--tokenSessionAliases', type=str,  # required=True,
+    #                help="The second token defines the name of the session. The token was extracted using a regular expression *^Session([12])$*. This can represent a string Session1 or Session2. And either 1 or 2 is taken as the token.\nIn the session-aliases, each row represents one session name. The first column is the regular expression for the token, the second column gives the final name.\n^1$ ASL_1\n^2$ ASL_2\nHere, the token name ^1$ - that is a string equaling to \"1\" is replaced in the analysis folder by the session name ASL_1.\nExample: \"tokenSessionAliases\": [\"^1$\", \"ASL_1\", \"^2$\", \"ASL_2\"],")
+    # p.add_argument('--tokenScanAliases', type=str,  # required=True,
+    #                help="")
+    # p.add_argument('--bMatchDirectories', action="store_true",
+    #                help="Set to true if it should look for directories and DICOM files inside them. Set to false when directly separate files are identified by the folder-hierarchy string.")
+    
 
     ################ DataPar.json arguments #######################
 

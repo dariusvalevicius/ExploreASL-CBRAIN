@@ -1,5 +1,5 @@
 {
-    "name": "ExploreASL_BIDS",
+    "name": "ExploreASL BIDS",
     "description": "A pipeline and toolbox for image processing and statistics of arterial spin labeling perfusion MR images.",
     "tool-version": "1.9.0",
     "schema-version": "0.5",
@@ -15,7 +15,7 @@
         {
             "id": "input_folder",
             "name": "Input Folder",
-            "description": "Data folder to be processed. Can be single-subject or multi-subject, in DICOM or BIDS (NIfTI) format.\nNOTE: For the Structural and ASL process modules, a CBCSV can be used to process multiple subjects. For the Population module, all subjects must be included in one file collection.",
+            "description": "BIDS Subject folder to be processed. A CBCSV file can be used to process multiple subjects in parallel.",
             "optional": false,
             "type": "File",
             "value-key": "[INPUT_FOLDER]",
@@ -33,8 +33,8 @@
         {
             "id": "dataset_description_json",
             "name": "Dataset Description JSON",
-            "description": "A dataset_description.json file MUST be provided if not present in the input folder.",
-            "optional": true,
+            "description": "A dataset_description.json file for the BIDS dataset.",
+            "optional": false,
             "type": "File",
             "value-key": "[DATASET_DESCRIPTION]",
             "command-line-flag": "--dataset_description_json"
@@ -856,10 +856,13 @@
         "cbrain:readonly-input-files": true,
         "cbrain:integrator_modules": {
             "BoutiquesFileTypeVerifier": {
-                "input_folder": [ "BidsSubject", "BidsDataset" ]
+                "input_folder": [ "BidsSubject" ]
             },
             "BoutiquesFileNameMatcher": {
                 "input_folder": "^sub-[a-zA-Z0-9_]+$"
+            },
+            "BoutiquesOutputFileTypeSetter": {
+                "output_folder": "ExploreASLOutput"
             },
             "BoutiquesBidsSingleSubjectMaker": "input_folder"
         }

@@ -8,12 +8,6 @@ from to_json import parse_list_to_dict
 import json
 
 
-## New in this version (1.2.0?):
-# - Split tool in 3 (BIDS Subject, BIDS Dataset, DICOM)
-# - Updated descriptor with default values
-# - List type inputs will now be lists in CBRAIN
-
-
 ######################## Run arg parser script #############################
 print('===== Running CBRAIN wrapper for ExploreASL 1.9.0 =====')
 print('Parsing arguments...')
@@ -39,13 +33,13 @@ if args.mode == "BIDS":
 #     import_modules = f"[0,0,{args.im_deface},1]"
 #     process_modules = f"1"
 
-if args.mode == "DICOM":
+# if args.mode == "DICOM":
 
-    import_modules = f"[1]"
-    process_modules = f"[{args.pm_structural},{args.pm_asl},{args.pm_population}]"
+#     import_modules = f"[1]"
+#     process_modules = f"[{args.pm_structural},{args.pm_asl},{args.pm_population}]"
 
-print('Import Modules: ' + import_modules)
-print('Process Modules: ' + process_modules)
+# print('Import Modules: ' + import_modules)
+# print('Process Modules: ' + process_modules)
 
 ############################ File management ##########################################
 
@@ -84,25 +78,24 @@ if args.mode == "BIDS":
 ## User can figure out the complicated system from xASL docs
 ## Alternatively, we can add a parameter section for defining sourceStructure.json
 
-if args.mode == "DICOM":
+# dicom_has_json = False
 
-    valid_dicom_input = False
+# if args.mode == "DICOM":
 
-    ## Do a bunch of checks!
+#     # Contains sourceStructure.json?
+#     for dirpath, dirs, files in os.walk('src'): 
+#         for filename in files:
+#             if filename == "sourceStructure.json":
+#                 dicom_has_json = True
 
-    # Contains sourceStructure.json?
-    for dirpath, dirs, files in os.walk('src'): 
-        for filename in files:
-            if filename == "sourceStructure.json":
-                valid_dicom_input = True
+#     shutil.copytree(args.input_folder, output_path)
+
+################################ Create JSON configs ###############################
+
     
-    if not valid_dicom_input:
-        raise Exception("")
+print("Creating config files...")
 
-    shutil.copytree(args.input_folder, output_path)
-
-################################ Create JSON config ###############################
-print("Creating config file...")
+# Create dataPar.json
 data_par = parse_list_to_dict(vars(params))
 
 data_par_path = os.path.join(
@@ -116,6 +109,28 @@ print('Writing dataPar.json...')
 with open(data_par_path, 'w') as f:
     json_object = json.dumps(data_par, indent=4)
     f.write(json_object)
+
+# Create sourceStructure.json if applicable
+
+# if args.mode =='DICOM' and not dicom_has_json:
+
+#     # source_structure = {k: data_par[k] for k in ('folderHierarchy', 'tokenOrdering', 'tokenVisitAliases', 'tokenSessionAliases', 'tokenScanAliases', 'bMatchDirectories')}
+
+#     source_structure = {}
+
+#     for k in ['folderHierarchy', 'tokenOrdering', 'tokenVisitAliases', 'tokenSessionAliases', 'tokenScanAliases', 'bMatchDirectories']:
+#         if k in data_par.keys():
+#             source_structure[k] = data_par[k]
+
+#     source_structure_path = os.path.join(output_path, 'sourceStructure.json')
+
+#     print('Writing sourceStructure.json...')
+#     with open(source_structure_path, 'w') as f:
+#         json_object = json.dumps(source_structure, indent=4)
+#         f.write(json_object)
+
+
+
 
 ###################### Run ExploreASL from bash starter script #########################
 print('Running ExploreASL.')
