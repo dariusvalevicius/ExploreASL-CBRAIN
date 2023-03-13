@@ -16,8 +16,6 @@ args, params = parse_arguments(sys.argv[1:])
 
 ######################### Concatenate xASL Module Parameters ################################
 # Create boolean arrays for modules
-# Semicolons (MATLAB vertical vectors) are used instead of spaces (horizontal vectors),
-# because run_xASL_latest.sh will send the space-separated characters as separate shell arguments...
 print('Parsing module inclusion parameters...')
 
 import_modules = ""
@@ -134,13 +132,17 @@ with open(data_par_path, 'w') as f:
 
 ###################### Run ExploreASL from bash starter script #########################
 print('Running ExploreASL.')
+print('=======================================================')
+
 # Original call (in Bash):
 # /bin/bash /opt/xasl/xASL_latest/run_xASL_latest.sh /opt/mcr/v97/ $pathDataRoot $IMPORTMODULES $PROCESSMODULES
 exit_code = subprocess.call(['bash', '/opt/xASL/run_xASL_latest.sh',
                             '/opt/matlabruntime/v911/', output_path, import_modules, process_modules])
 
+print('=======================================================')
 if (exit_code):
     print('ExploreASL entrypoint terminated with exit code 1.')
+    raise Exception("ExploreASL execution failed!")
 else:
     print('ExploreASL entrypoint terminated with exit code 0.')
     print('ExploreASL task completed.')
