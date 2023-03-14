@@ -20,3 +20,7 @@ RUN chmod 755 /opt/xasl_cbrain/run_xasl.py
 
 # Add wrapper to path
 ENV PATH="${PATH}:/opt/xasl_cbrain"
+
+# Run as non-root user
+RUN useradd cbrain_user
+USER cbrain_user
