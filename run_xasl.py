@@ -136,17 +136,27 @@ print('=======================================================')
 
 # Original call (in Bash):
 # /bin/bash /opt/xasl/xASL_latest/run_xASL_latest.sh /opt/mcr/v97/ $pathDataRoot $IMPORTMODULES $PROCESSMODULES
-exit_code = subprocess.call(['bash', '/opt/xASL/run_xASL_latest.sh',
-                            '/opt/matlabruntime/v911/', output_path, import_modules, process_modules])
+# subprocess.run(['bash', '/opt/xASL/run_xASL_latest.sh',
+#                             '/opt/matlabruntime/v911/', 
+#                             output_path, import_modules, process_modules],
+#                             check=True)
+
+try:
+    result = subprocess.run(['bash', 
+                             '/opt/xASL/run_xASL_latest.sh',
+                             '/opt/matlabruntime/v911/', 
+                             output_path, import_modules, process_modules], 
+                             stderr=subprocess.PIPE, check=True)
+except subprocess.CalledProcessError as e:
+    error_code = e.returncode
+    error_message = e.stderr.decode().strip()
+    raise Exception(f"Error {error_code}: {error_message}")
 
 print('=======================================================')
-if (exit_code):
-    print('ExploreASL entrypoint terminated with exit code 1.')
-    raise Exception("ExploreASL execution failed!")
-else:
-    print('ExploreASL entrypoint terminated with exit code 0.')
-    print('ExploreASL task completed.')
-
 
 # End of script
+# This will only execute if subprocess.run completes successfully
+# check=True will raise a CalledProcessError exception
+print('ExploreASL task completed.')
 print('Terminating...')
+exit(0)
