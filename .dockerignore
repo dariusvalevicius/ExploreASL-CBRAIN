@@ -1,0 +1,12 @@
+archive/
+boutiques_descriptors/
+boutiques_invocation/
+ds000240/
+ds000240_xasl_output/
+test_input/
+zipped_test_data/
+sub-01/
+sourcedata/
+sourceStructure.json
+*output/
+.git/
