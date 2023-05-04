@@ -1,5 +1,7 @@
 # Changelog
 
+
+
 ## Version 1.2.0 (TBD/02/2023)
 
 Created new tool ExploreASL-BIDS, which takes only BIDS subjects as input. DICOM functionality is now deprecated.
@@ -16,6 +18,10 @@ BIDS version:
 - Uses BoutiquesBidsSingleSubjectMaker module in Boutiques to standardize input to BIDS Dataset
 - Does not support population/BIDS datset processing yet!
 
+### Hotfix 1.2.1 (04/04/2023
+
+- Wrapper now only accepts BIDS dataset (dataset_description argument removed)
+- Fixed problem with nested input folder where output would also be nested (offline only)
 
 
 ## Version 1.1.2 (17/10/2022)
