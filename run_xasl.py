@@ -7,7 +7,6 @@ from parse_arguments import parse_arguments
 from to_json import parse_list_to_dict
 import json
 
-
 ######################## Run arg parser script #############################
 print('===== Running CBRAIN wrapper for ExploreASL 1.9.0 =====')
 print('Parsing arguments...')
@@ -26,11 +25,6 @@ if args.mode == "BIDS":
     import_modules = f"[0,0,{args.im_deface},1]"
     process_modules = f"[{args.pm_structural},{args.pm_asl},0]"
 
-# if args.mode == "BIDS_Dataset":
-
-#     import_modules = f"[0,0,{args.im_deface},1]"
-#     process_modules = f"1"
-
 # if args.mode == "DICOM":
 
 #     import_modules = f"[1]"
@@ -45,7 +39,8 @@ print('Preparing output directory...')
 # input_path = os.path.abspath(args.input_folder)
 
 # Set output root folder variable
-output_path = os.path.abspath(args.output_folder)
+# Strip extra folder layers that may be artifacts of "input_folder" prefixing
+output_path = os.path.abspath(os.path.basename(os.path.normpath(args.output_folder)))
 print('Data root directory: ' + output_path)
 
 ## BIDS dataset:
@@ -59,17 +54,11 @@ if args.mode == "BIDS":
     print('Copying input files...')
     print('Copying contents of ' + args.input_folder + ' to ' + dest_path)
 
-    # For development purposes:
-    # When running outside CBRAIN (e.g. directly in Docker), input will have one less layer
-    # Check for dataset_description.json; if not present, add extra folder layer and copy dataset_description_json
-
     if os.path.isfile(os.path.join(args.input_folder, "dataset_description.json")):
-        print("BIDS Dataset found.")
+        print("BIDS Dataset found. Copying...")
         shutil.copytree(args.input_folder, dest_path)
     else:
-        print("BIDS Subject found. Copying dataset_description.json")
-        shutil.copytree(args.input_folder, os.path.join(dest_path, args.input_folder))
-        shutil.copy(args.dataset_description_json, dest_path)
+        raise Exception("BIDS ERROR: No dataset_description.json found in input directory. Is it a valid BIDS dataset?")
 
 ## DICOM:
 ## Should already have correct folder structure + all contained JSONs!
